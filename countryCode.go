@@ -12,7 +12,7 @@ var nameToCode = make(map[string]string)
 var codeToName = make(map[string]string)
 var initialised = false
 
-const version = "v0.0.3"
+const version = "v0.0.4"
 
 func getGoPackagePath() string {
 	var goPath string
@@ -22,8 +22,8 @@ func getGoPackagePath() string {
 		goPath = os.Getenv("HOME") + "/go/"
 	}
 
-	// shall be something like: /home/username/go/github.com/nightin-gale/countryCode@v0.0.2/
-	return fmt.Sprintf("%sgithub.com/nightin-gale/countryCode@%s/", goPath, version)
+	// shall be something like: /home/username/go/pkg/mod/github.com/nightin-gale/countryCode@v0.0.2/
+	return fmt.Sprintf("%spkg/mod/github.com/nightin-gale/country!code@%s/", goPath, version)
 }
 
 func readCsvFile(filePath string) [][]string {
