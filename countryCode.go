@@ -1,4 +1,4 @@
-package main
+package countryCode
 
 import (
 	"encoding/csv"
@@ -11,6 +11,20 @@ import (
 var nameToCode = make(map[string]string)
 var codeToName = make(map[string]string)
 var initialised = false
+
+const version = "v0.0.3"
+
+func getGoPackagePath() string {
+	var goPath string
+	if os.Getenv("GOPATH") != "" {
+		goPath = os.Getenv("GOPATH")
+	} else {
+		goPath = os.Getenv("HOME") + "/go/"
+	}
+
+	// shall be something like: /home/username/go/github.com/nightin-gale/countryCode@v0.0.2/
+	return fmt.Sprintf("%sgithub.com/nightin-gale/countryCode@%s/", goPath, version)
+}
 
 func readCsvFile(filePath string) [][]string {
 	f, err := os.Open(filePath)
@@ -77,8 +91,9 @@ func GetCountryName(code string) (string, error) {
 }
 
 func initialise() {
-	countryCode := readCsvFile("./countryCode.csv")
-	moreCountryName := readCsvFile("./moreCountryName.csv")
+	path := getGoPackagePath()
+	countryCode := readCsvFile(path + "countryCode.csv")
+	moreCountryName := readCsvFile(path + "moreCountryName.csv")
 	for _, row := range countryCode {
 		nameToCode[row[0]] = row[1]
 		codeToName[row[1]] = row[0]
@@ -86,18 +101,4 @@ func initialise() {
 	for _, row := range moreCountryName {
 		nameToCode[row[0]] = row[1]
 	}
-}
-
-func main() {
-	tmp, err := GetCountryName("cn")
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(tmp)
-
-	tmp, err = GetCountryCode("United States")
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(tmp)
 }
