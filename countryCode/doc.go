@@ -18,3 +18,5 @@
  Package countryCode provides country code and conntry name look up (and their
  database). It exposes two functions: GetCountryCode and GetCountryName.
 */
+
+package countryCode
