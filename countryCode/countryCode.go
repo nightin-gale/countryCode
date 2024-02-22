@@ -7,8 +7,6 @@ import (
 	"github.com/nightin-gale/countryCode/data"
 )
 
-const version = "1.0.2"
-
 // GetCountryCode returns the country code for the given country name.
 // Returns an error if the country name is not found.
 func GetCountryCode(name string) (string, error) {
